@@ -10,6 +10,8 @@ public class Main : MonoBehaviour {
 	public Material material;
 
 	void Start () {
+		//Screen.fullScreen = false;
+		//Screen.SetResolution(1000, 1000, Screen.fullScreen);
 		QualitySettings.antiAliasing = 8;
 		particles = new GameObject[numParticles];
 		for(int i=0; i<numParticles; i++){
@@ -25,6 +27,13 @@ public class Main : MonoBehaviour {
 
 	void OnPostRender() {
 		for(int i=0; i<numParticles; i++){
+			GameObject partA = particles[i] as GameObject;
+			for(int j=i+1; j<numParticles; j++){
+				GameObject partB = particles[j] as GameObject;
+				Spring(partA, partB);
+			}
+		}
+		for(int i=0; i<numParticles; i++){
 			GameObject particle = particles[i] as GameObject;  
 			particle.transform.Translate(particle.GetComponent<Ball>().vx, particle.GetComponent<Ball>().vy, 0);
 			if(particle.transform.position.x > GetWorldBottomRight().x){
@@ -36,14 +45,6 @@ public class Main : MonoBehaviour {
 				particle.transform.position = new Vector2(particle.transform.position.x, GetWorldBottomRight().y);
 			}else if(particle.transform.position.y < GetWorldBottomRight().y){
 				particle.transform.position = new Vector2(particle.transform.position.x, GetWordlTopLeft().y);
-			}
-		}
-
-		for(int i=0; i<numParticles; i++){
-			GameObject partA = particles[i] as GameObject;
-			for(int j=i+1; j<numParticles; j++){
-				GameObject partB = particles[j] as GameObject;
-				Spring(partA, partB);
 			}
 		}
 	}
