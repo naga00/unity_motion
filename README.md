@@ -1,3 +1,3 @@
 # unity_motion
 
-http://onscreen.jp/animation/
+http://onscreen.jp/motion/
